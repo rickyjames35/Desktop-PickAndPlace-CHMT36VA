@@ -29,7 +29,7 @@ Choose the following options : ASCII / Millimeters / Separate files from front a
 ### Feeder data
 You can find a sample file in this repository : `feeders_data_sample.fods`. This is basically the same file as Sparkfun's online spreadsheet, kept as a local copy here in case the online version is changed in the future.
 
-You can get detailed usage information here : https://www.sparkfun.com/sparkx/blog/2591
+You can get detailed usage information here : https://news.sparkfun.com/2591
 
 ### Cut Tape Data
 Passed via the argument --cuttape_config_file
