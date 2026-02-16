@@ -1,3 +1,6 @@
+# Python venv
+.venv
+
 # Ignore my credentials
 /Eagle-Conversion/ConvertToCharm.cfg
 /KiCad-Conversion/credentials.txt

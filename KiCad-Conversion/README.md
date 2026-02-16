@@ -5,9 +5,9 @@ This script is used to convert KiCad component position files *.pos into CharmHi
 Feeder information is loaded from a local spreadsheet file, using the same syntax as SparkFun's online sheet.
 
 ## Prerequisites
-The script uses Python 3. 
+The script uses Python 3.
 
-The following dependencies are needed : 
+The following dependencies are needed :
 * `pyexcel`
 * `pyexcel-odsr` for ods, fods files support
 * `pyexcel-xls` for xls, xlsx files support (untested)
@@ -18,7 +18,7 @@ You can run `pip3 install pyexcel pyexcel-odsr` to install those dependencies.
 Run `python3 convert.py -h` to get an overview of the command line options.
 
 ### KiCad export
-As of KiCad v5.1.0 : 
+As of KiCad v5.1.0 :
 
 Remember to set the auxiliary axis origin at the bottom left of the PCB, so that all the components positions are related to the PCB corner.
 
@@ -35,7 +35,7 @@ You can get detailed usage information here : https://news.sparkfun.com/2591
 Passed via the argument --cuttape_config_file
 
 The file describes the cut tapes installed on the PCB area of the machine.
-Keeping this data in a separate file allows to have multiple setups for multiple productions, 
+Keeping this data in a separate file allows to have multiple setups for multiple productions,
 (when the feeders are loaded with consistent and regular components)
 
 Using a rig, set the X/Y first points of the cut tapes by moving to it with the camera.
@@ -46,9 +46,9 @@ You can find a sample file in this repository : `cut_tape_sample.fods`.
 The names (Components in the file) are, like in the feeders spreadsheet, a concatenation of the partnumber and footprint.
 
 ### Basic usage
-Let's have a look at the most basic usage : a single PCB with components on the top side only. 
+Let's have a look at the most basic usage : a single PCB with components on the top side only.
 
-You just have to run the script specifying your .pos file path and your feeder data file path : 
+You just have to run the script specifying your .pos file path and your feeder data file path :
 
     python3 convert.py PROJECT-top.pos FEEDER_DATA.ods
 
@@ -64,7 +64,7 @@ There is a command line option to include the components that were not found in 
 ### Bottom components
 When a PCB has components on the bottom, the component coordinates must be mirrored and the origin should be the bottom right corner (when viewed from the top).
 
-Two extra arguments must be specified : `--mirror_x` tells the script to flip all components (and their rotations) while `--board_width` provides the required offset in mm. 
+Two extra arguments must be specified : `--mirror_x` tells the script to flip all components (and their rotations) while `--board_width` provides the required offset in mm.
 
     python3 convert.py PROJECT-top.pos FEEDER_DATA.ods --mirror_x --board_width W
 
@@ -72,13 +72,13 @@ Two extra arguments must be specified : `--mirror_x` tells the script to flip al
 ### Populating a panel
 This is not supported directly by this script and should be set manually from the CharmHigh software.
 
-However one important step is to specify the offset of the bottom left PCB in the panel. 
+However one important step is to specify the offset of the bottom left PCB in the panel.
 
-You should export the .pos file from the single PCB file (not the panel). From the panel, you need the following data : X and Y offset, X and Y spacing. 
+You should export the .pos file from the single PCB file (not the panel). From the panel, you need the following data : X and Y offset, X and Y spacing.
 
 ![Panel offset and spacing](doc/panel_parameters.png)
 
-Then run the script as usual, specifying the X and Y offset : 
+Then run the script as usual, specifying the X and Y offset :
 
     python3 convert.py PROJECT-top.pos FEEDER_DATA.ods --offset X Y
 
@@ -91,8 +91,23 @@ If one of the PCBs on the panel is defective, you can add a "Skip" record to dis
 ### Bottom components on a panel
 This is the same as for the top components, except that you should measure the offset while looking at the board from the bottom. You can do this easily using the View > Flip board view command that is present in the last KiCad versions.
 
-You should run: 
+You should run:
 
     python3 convert.py PROJECT-top.pos FEEDER_DATA.ods --mirror_x --board_width W --offset X Y
 
 with W the width of a **single PCB** ; X and Y the offset from the flipped view.
+
+### How to convert
+
+Create venv
+```
+python3 -m venv .venv
+. .venv/bin/activate
+pip3 install pyexcel pyexcel-odsr
+```
+
+Run script
+```
+. .venv/bin/activate
+python3 convert.py input/angry_power-top.pos input/feeders_data.csv
+```
